@@ -22,7 +22,8 @@ jobs:
         run: yarn
 
       - name: 构建项目
-        run: yarn build
+        run: yarn build && yarn export
+
 
       - name: 查看 .next 目录
         run: ls -la .next
@@ -31,4 +32,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./.next
+          publish_dir: ./out
