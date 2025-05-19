@@ -1,0 +1,24 @@
+name: CI 流程
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v3
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '21'
+
+      - name: 安装依赖
+        run: yarn
+
+      - name: 运行构建
+        run: yarn build
