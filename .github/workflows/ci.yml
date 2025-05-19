@@ -45,4 +45,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: 上传到 S3
-        run: aws s3 sync ./out ${{ secrets.AWS_BUCKET_NAME }}
+        run: aws s3 sync ./out s3://${{ secrets.AWS_BUCKET_NAME }}
