@@ -8,17 +8,27 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: 拉取代码
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
 
-      - uses: actions/setup-node@v3
+      - name: 安装 Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - run: yarn
+      - name: 安装依赖
+        run: yarn
 
-      - run: yarn build
+      - name: 构建项目
+        run: yarn build
 
-      - uses: peaceiris/actions-gh-pages@v3
+      - name: 查看 .next 目录
+        run: ls -la .next
+
+      - name: 发布到 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./.next
