@@ -65,7 +65,7 @@ export default function Home() {
           >
             <Image
               aria-hidden
-              src={`${basePath}/logo.svg`}
+              src={`${basePath}/file.svg`}
               alt="File icon"
               width={16}
               height={16}
