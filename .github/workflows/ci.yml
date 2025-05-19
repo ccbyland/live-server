@@ -22,11 +22,11 @@ jobs:
         run: yarn
 
       - name: 构建项目
-        run: yarn build && yarn export
+        run: yarn build
 
 
       - name: 查看 .next 目录
-        run: ls -la .next
+        run: ls -la out
 
       - name: 发布到 GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
