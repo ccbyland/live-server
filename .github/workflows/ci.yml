@@ -2,7 +2,7 @@ name: CI 流程
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   build-and-test:
