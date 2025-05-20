@@ -43,6 +43,7 @@ jobs:
       
       - name: 📄 .env.prod
         run: |
+          ls
           echo "📄 .env.prod 内容如下："
           cat ./.env.prod
 
