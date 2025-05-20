@@ -40,6 +40,11 @@ jobs:
 
       - name: 📦 安装依赖
         run: yarn install --frozen-lockfile
+      
+      - name: 📄 .env.prod
+        run: |
+          echo "📄 .env.prod 内容如下："
+          cat ./.env.prod
 
       # 🏗️ 构建阶段 -------------------------
       - name: 🛠️ 构建项目
