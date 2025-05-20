@@ -1,4 +1,4 @@
-name: 部署前端到 GitHub Pages 和 S3
+name: 部署前端到 S3
 
 # 🧨 手动触发，允许选择构建环境和版本号
 on:
