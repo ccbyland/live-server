@@ -40,12 +40,6 @@ jobs:
 
       - name: 📦 安装依赖
         run: yarn install --frozen-lockfile
-      
-      - name: 📄 .env.prod
-        run: |
-          ls
-          echo "📄 .env.prod 内容如下："
-          cat ./.env.prod
 
       # 🏗️ 构建阶段 -------------------------
       - name: 🛠️ 构建项目
@@ -65,11 +59,6 @@ jobs:
               exit 1
               ;;
           esac
-
-      - name: 📄 输出 index.html 内容
-        run: |
-          echo "📄 index.html 内容如下："
-          cat out/index.html
 
       - name: 🔍 查看构建产物
         run: ls -la out
