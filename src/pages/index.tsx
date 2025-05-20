@@ -5,6 +5,7 @@ import styles from "@/styles/Home.module.css";
 
 export default function Home() {
   const { basePath } = useRouter();
+  const env_name = process.env.NEXT_PUBLIC_ENV_NAME
 
   return (
     <>
@@ -15,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={`${styles.page}`}>
-        <div>{process.env.NODE_ENV}——{process.env.NEXT_PUBLIC_ENV_NAME}</div>
+        <div>{process.env.NODE_ENV}——{env_name}</div>
         <main className={styles.main}>
           <Image
             className={styles.logo}
