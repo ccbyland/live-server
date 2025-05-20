@@ -60,6 +60,11 @@ jobs:
               ;;
           esac
 
+      - name: 📄 输出 index.html 内容
+        run: |
+          echo "📄 index.html 内容如下："
+          cat out/index.html
+
       - name: 🔍 查看构建产物
         run: ls -la out
 
