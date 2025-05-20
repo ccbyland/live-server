@@ -32,6 +32,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "21"
+        
+      - name: 📢 显示 Node.js 和 Yarn 版本
+        run: |
+          echo "🧾 Node.js 版本: $(node -v)"
+          echo "🧶 Yarn 版本: $(yarn -v)"
 
       - name: 📦 安装依赖
         run: yarn install --frozen-lockfile
