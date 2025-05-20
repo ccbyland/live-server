@@ -2,11 +2,11 @@ import { useRouter } from "next/router";
 
 export default function BlogPost() {
   const router = useRouter();
-  const { slug } = router.query;
+  const { id } = router.query;
 
   return (
     <div>
-      <h1>文章 slug: {slug}</h1>
+      <h1>文章 slug: {id}</h1>
     </div>
   );
 }
