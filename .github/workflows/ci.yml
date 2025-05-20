@@ -1,48 +1,84 @@
-name: 部署前端到 GitHub Pages
+name: 部署前端到 GitHub Pages 和 S3
 
+# 🧨 手动触发，允许选择构建环境和版本号
 on:
-  push:
-    branches: [master]
+  workflow_dispatch:
+    inputs:
+      build_env:
+        description: "构建环境（如 prod / test）"
+        required: true
+        default: "prod"
+      version:
+        description: "版本号（如 v1.0.0）"
+        required: true
+        default: "v1.0.0"
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
+    env:
+      BUILD_ENV: ${{ github.event.inputs.build_env }}
+      VERSION: ${{ github.event.inputs.version }}
+
     steps:
-      - name: 拉取代码
+      # 🧩 初始化阶段 -------------------------
+      - name: ✅ 拉取代码
         uses: actions/checkout@v3
         with:
           persist-credentials: true
 
-      - name: 安装 Node.js
+      - name: 🟦 安装 Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "21"
 
-      - name: 安装依赖
-        run: yarn
+      - name: 📦 安装依赖
+        run: yarn install --frozen-lockfile
 
-      - name: 构建项目
-        run: yarn build
+      # 🏗️ 构建阶段 -------------------------
+      - name: 🛠️ 构建项目
+        run: |
+          echo "🚧 构建环境：$BUILD_ENV"
+          echo "🚀 构建版本：$VERSION"
 
-      - name: 查看 out 目录
+          case "$BUILD_ENV" in
+            test)
+              yarn build:test
+              ;;
+            prod)
+              yarn build:prod
+              ;;
+            *)
+              echo "❌ 不支持的构建环境：$BUILD_ENV（请使用 prod 或 test）"
+              exit 1
+              ;;
+          esac
+
+      - name: 🔍 查看构建产物
         run: ls -la out
 
-      - name: 打印部署地址
+      - name: 📢 显示部署信息
         run: |
-          echo "部署地址： https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          echo "✅ 构建完成"
+          echo "📤 S3 目标路径: s3://${{ secrets.AWS_BUCKET_NAME }}/$VERSION"
 
-      - name: 发布到 GitHub Pages
+      # 🚀 发布阶段 -------------------------
+      - name: 🚀 发布到 GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
 
-      - name: 配置AWS凭证
+      - name: 🔐 配置 AWS 凭证
         uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: 上传到 S3
-        run: aws s3 sync ./out s3://${{ secrets.AWS_BUCKET_NAME }}
+      - name: 📤 上传到 S3（按版本目录）
+        run: |
+          echo "🔄 正在上传构建产物到 S3..."
+          aws s3 sync ./out s3://${{ secrets.AWS_BUCKET_NAME }}/$VERSION --delete
+          echo "✅ 上传成功：s3://${{ secrets.AWS_BUCKET_NAME }}/$VERSION"

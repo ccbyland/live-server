@@ -1,12 +1,10 @@
 import type { NextConfig } from "next";
 
-// const repoName = "live-server";
+const isLocal = process.env.NODE_ENV === "development";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  output: isLocal ? undefined : "export",
   reactStrictMode: true,
-  // basePath: `/${repoName}`,
-  // assetPrefix: `/${repoName}/`,
   images: {
     unoptimized: true,
   },

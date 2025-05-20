@@ -15,6 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={`${styles.page}`}>
+        <div>{process.env.NODE_ENV}——{process.env.NEXT_PUBLIC_ENV_NAME}</div>
         <main className={styles.main}>
           <Image
             className={styles.logo}

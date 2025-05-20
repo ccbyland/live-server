@@ -4,20 +4,22 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build:test": "dotenv -e .env.test -- next build",
+    "build:prod": "dotenv -e .env.prod -- next build",
     "start": "next start",
     "serve": "npx serve@latest out",
     "lint": "next lint"
   },
   "dependencies": {
+    "dotenv": "^16.5.0",
+    "next": "15.3.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.3.2"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^19",
-    "@types/react-dom": "^19"
+    "@types/react-dom": "^19",
+    "typescript": "^5"
   }
 }
